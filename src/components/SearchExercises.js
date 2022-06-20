@@ -22,16 +22,23 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
   const handleSearch = async () => {
     if (search) {
       const excersiseData = await fetchData(
-        "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
+        "https://exercisedb.p.rapidapi.com/exercises",
+
         exerciseOptions
       );
+
       const searchedExercises = excersiseData.filter(
-        (exercise) =>
-          exercise.name.toLowerCase().includes(search) ||
-          exercise.target.toLowerCase().includes(search) ||
-          exercise.equipment.toLowerCase().includes(search) ||
-          exercise.bodyPart.toLowerCase().includes(search)
+        (item) =>
+          item.name.toLowerCase().includes(search) ||
+          item.target.toLowerCase().includes(search) ||
+          item.equipment.toLowerCase().includes(search) ||
+          item.bodyPart.toLowerCase().includes(search)
       );
+      console.log(searchedExercises);
+      window.scrollTo({ top: 1800, left: 100, behavior: "smooth" });
+
+      setSearch("");
+      setExercises(searchedExercises);
     }
   };
   return (
@@ -47,7 +54,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
         Awesome Exercise you <br />
         should know
       </Typography>
-      <box position="relative" mb="30px">
+      <Box position="relative" mb="30px">
         <TextField
           sx={{
             input: {
@@ -79,7 +86,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
         >
           Search
         </Button>
-      </box>
+      </Box>
       <Box sx={{ position: "relative", width: "100%", p: "20px" }}>
         <HorizontalScrollbar
           data={bodyParts}
